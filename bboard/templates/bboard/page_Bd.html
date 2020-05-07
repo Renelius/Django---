@@ -1,0 +1,29 @@
+{% extends "layout/basic.html" %}
+{% block title %}{{bb.title}}{% endblock %}
+{% block content %}
+
+{% for message in messages %}
+    <h3>{{ message|safe }}</h3>
+{% endfor %}
+
+
+
+<div class="b" style="margin-top:50px;">
+    <h4>{{bb.title}}</h4>
+    <p>{{bb.content}}</p>
+    <p>{{bb.published|date:'d.m.Y H:i:s'}}</p>
+    <p>{{bb.author}}</p>
+    <img src="../media/{{image.1.img}}"  width="400" height="400" alt="{{ bb.title }}">
+
+</div>
+<h2 style="margin-top: 50px;">Комментарии:</h2>
+{% for cc in coments %}
+<div>
+	<h4>{{cc.name}}:</h4>
+	<p>{{cc.body}}</p>
+	<p>{{cc.created|date:"d.m.Y H:i:s"}}</p>
+</div>
+{% endfor %}
+
+
+{% endblock %}

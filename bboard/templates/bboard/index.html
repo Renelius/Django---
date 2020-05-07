@@ -1,0 +1,45 @@
+{% extends "layout/basic.html" %}
+{% block content %}
+
+{% if messages %}
+        {% for message in messages %}
+            <h2 style="background-color:green;">{{ message|safe }}</h2>
+        {% endfor %}
+{% endif %}
+
+{% for bb in bbs %}
+
+
+<div class="b">
+    <h3><a href="{% url 'page_Bd' bb.pk %}">{{bb.title}}</a></h3>
+    <p>{{bb.content}}</p>
+    <p><a href="{% url 'by_rubric' bb.rubric.pk %}">{{bb.rubric.name}}</a></p>
+    <p>{{bb.published|date:'d.m.Y H:i:s'}}</p>
+    {% for image in images %}
+    {%if bb.pk == image.bb.pk%}
+
+    <img src="../bboard/media/{{image.img}}"  width="200" height="200" alt="{{ bb.title }}" style="margin-right:20px;">
+
+    {% endif %}
+    {% endfor %}
+     <p><a href="{% url 'comment' bb.pk %}"> комментарии </a></p>
+
+</div>
+
+{% endfor %}
+<div class="container justify-content-center align-items-center">
+<nav aria-label="Search results pages" class="">
+  <ul class="pagination justify-content-center align-items-center">
+      {% if page.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}">
+        {{ page.previous_page_number }} </a></li>
+      {% endif %}
+    <li class="page-item active"><a class="page-link" href="#">{{ page.number }}</a></li>
+      {% if page.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}">
+        {{ page.next_page_number }}</a></li>
+        {% endif %}
+  </ul>
+</nav>
+</div>
+{% endblock %}

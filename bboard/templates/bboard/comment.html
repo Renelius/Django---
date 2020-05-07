@@ -1,0 +1,28 @@
+{% extends "layout/basic.html" %}
+{% block title %}Комент{% endblock %}
+{% block content %}
+
+{% if user.is_anonymous%}
+
+<h3>Зарегестрируйся что бы коментировать</h3>
+{% else %}
+<form method="post">
+	{% csrf_token %}
+	<table style="margin: auto; margin-top: 50px;">
+		{{ form }}
+	</table>
+	<input type="submit" value="Добавить">
+</form>
+{% endif %}
+<h2 style="margin-top: 50px;">Комментарии:</h2>
+{% for cc in ccs %}
+<div>
+	<h4>{{cc.name}}:</h4>
+	<p>{{cc.body}}</p>
+	<p>{{cc.created|date:"d.m.Y H:i:s"}}</p>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+

@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=utf-8" >
+<title>Cпиcoк pyбpик</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="response"></div>
+<h3 id="test" onclick="$('#test').html('lol')">Список рубрик</h3>
+<div id="list"></div>
+
+<form>
+<input type="text" name="name" id="name_rubric">
+</form>
+<button id="button">Добавить рубрику</button>
+
+<script>
+window.onload = function(){
+
+            var username='Renelius41'
+            var password='kirya14'
+            var credentials = window.btoa(username + ':' + password);
+            console.log(credentials);
+            console.log(document.cookie);
+             $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1:8000/bboard/api/rubrics/',
+                headers: {
+                'Authorization': 'Basic ' + credentials
+                },
+                success: function(data){
+                console.log(data);
+                var s = '<ul>';
+                for (i = 0; i < data.length; i++) {
+                data_id=data[i].id;
+                s += "<li>" + data[i].name +'</li>';
+                }
+                s += '</ul>'
+                $('#list').html(s);
+                }
+                });
+
+
+                $('#button').click(function(){
+                var data2 = JSON.stringify({'name': $('#name_rubric').val()});
+                console.log(data2);
+                $.ajax({
+                type: 'POST',
+                url: 'http://127.0.0.1:8000/bboard/api/rubrics/',
+                headers: {
+                'Authorization': 'Basic ' + credentials
+                },
+                data: data2,
+                contentType: 'application/json',
+                cache: false,
+                success: function(data){
+                console.log(typeof(data));
+                console.log(data);
+                $('#response').html(data);
+                },
+                });
+                $('#name_rubric').val('');
+                });
+
+                return false;
+ };
+</script>
+</body>
+</html>
+
