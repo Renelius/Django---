@@ -1,5 +1,5 @@
 
-Django==3.0
+Django==3.0.3
 Pillow==5.2.0
 djangorestframework==3.11.0
 django-recaptcha2==1.4.1
